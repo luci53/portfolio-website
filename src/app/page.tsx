@@ -9,11 +9,7 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-// import {
-//   IconBrandGithub,
-//   IconBrandGoogle,
-//   IconBrandOnlyfans,
-// } from "@tabler/icons-react";
+
 
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -105,7 +101,7 @@ export default function Home() {
           <TextGenerateEffect words={words} />
           <div>
             <Image
-              src="/profile.jpg"
+              src="/profile1.jpg"
               alt="Profile Picture"
               width={200}
               height={200}
