@@ -1,6 +1,33 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+@font-face {
+  font-family: "SquidBoy";
+  src: url("/fonts/SquidBoy.woff2") format("woff2"),
+    url("/fonts/SquidBoy.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SquidBoy";
+  src: url("/fonts/SquidBoy-Bold.woff2") format("woff2"),
+    url("/fonts/SquidBoy-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "SquidBoy";
+  src: url("/fonts/SquidBoy-Thin.woff2") format("woff2"),
+    url("/fonts/SquidBoy-Thin.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -131,5 +158,27 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .font-squid {
+    font-family: "SquidBoy", var(--font-sans), sans-serif;
+    letter-spacing: 0.03em;
+  }
+
+  .font-squid-wide {
+    font-family: "SquidBoy", var(--font-sans), sans-serif;
+    letter-spacing: 0.12em;
+  }
+
+  .animate-scroll {
+    animation: scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite;
+  }
+
+  @keyframes scroll {
+    to {
+      transform: translate(calc(-50% - 0.5rem));
+    }
   }
 }

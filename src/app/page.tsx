@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { HoveredLink, Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu";
@@ -9,6 +9,9 @@ import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
+import { ParallaxScrollSection } from "@/components/ui/parallax-scroll-section";
+import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+
 
 
 import { toast, ToastContainer } from "react-toastify";
@@ -29,6 +32,40 @@ import "react-toastify/dist/ReactToastify.css";
 
   console.log("Form submitted");
 };
+
+const projects = [
+  {
+    title: "Stremini AI",
+    description: "Modern AI Assistant for safer, faster work",
+    src: "/stremini_screenshot.png",
+    href: "https://www.stremini.site/",
+  },
+  {
+    title: "EduCore",
+    description: "Comprehensive Digital Academic Portal for school management",
+    src: "/class_helper_screenshot.png",
+    href: "https://class-helper-eight.vercel.app/",
+  },
+  {
+    title: "STREMINI Task Project",
+    description: "High-performance task management workspace",
+    src: "/task_management_screenshot.png",
+    href: "https://stremini-task-project.vercel.app/",
+  },
+  {
+    title: "R1 Brokerage & Dispatch",
+    description: "Remote Truck Dispatch Training & FMCSA Compliance portal",
+    src: "/trucking_screenshot.png",
+    href: "https://trucking-website-nine.vercel.app/",
+  },
+];
+
+const skills = [
+  { name: "HTML" }, { name: "CSS" }, { name: "JavaScript" }, 
+  { name: "React" }, { name: "Next.js" }, { name: "Tailwind CSS" }, 
+  { name: "Bootstrap" }, { name: "Git" }, { name: "Lua" }
+];
+
 export default function Home() {
   const [active, setActive] = useState<string | null>(null); // Define the active state for menu items
   const [darkMode, setDarkMode] = useState<boolean>(false); // Define the darkMode state
@@ -55,19 +92,16 @@ export default function Home() {
           </MenuItem>
 
           <MenuItem setActive={setActive} active={active} item="Projects">
-            <div className="text-sm grid grid-cols-2 gap-10 p-4">
-              <ProductItem
-                title="Website"
-                href="#projects"
-                src="/portfolio.png"
-                description="A showcase of my web development work."
-              />
-              <ProductItem
-                title="some scripting work"
-                href="#projects"
-                src="/cs.webp"
-                description="Its a lua script for a server not a website."
-              />
+            <div className="grid grid-cols-1 gap-3 p-2 md:grid-cols-2 md:gap-5">
+              {projects.map((project) => (
+                <ProductItem
+                  key={project.title}
+                  title={project.title}
+                  href={project.href}
+                  src={project.src}
+                  description={project.description}
+                />
+              ))}
             </div>
           </MenuItem>
 
@@ -101,7 +135,7 @@ export default function Home() {
           <TextGenerateEffect words={words} />
           <div>
             <Image
-              src="/profile1.jpg"
+              src="/profile.jpg"
               alt="Profile Picture"
               width={200}
               height={200}
@@ -111,9 +145,9 @@ export default function Home() {
         </motion.div>
       </AuroraBackground>
 
-      <main className="container mx-auto px-4 py-10 animate-fade-in">
+      <main className="container mx-auto px-4 py-10 [perspective:1400px] animate-fade-in">
   {/* About Section */}
-  <section id="about" className="my-20 text-center">
+  <ScrollDepthSection id="about" className="my-20 text-center">
     <h2 className="text-4xl font-bold mb-6 text-blue-600">About Me</h2>
     <p className="max-w-2xl mx-auto text-lg text-gray-700 dark:text-gray-300">
       I'm a passionate developer with a love for creating beautiful and functional websites. My career goal is to work in a dynamic team and build impactful web applications.
@@ -121,111 +155,28 @@ export default function Home() {
     <a href="/resume.pdf" download className="mt-6 inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
       📄 Download Resume
     </a>
-  </section>
+  </ScrollDepthSection>
 
-  {/* Skills Section */}
-  <section id="skills" className="my-20 text-center">
-    <h2 className="text-4xl font-bold mb-10 text-purple-600">Skills</h2>
-    <ul className="grid sm:grid-cols-2 md:grid-cols-3 gap-8 justify-center">
-      {['HTML', 'CSS', 'JavaScript', 'React', 'Bootstrap', 'Tailwind CSS', 'Git', 'Lua', '  next.js'].map((skill, i) => (
-        <li key={skill} className="text-left animate-fade-up delay-[${i * 100}ms]">
-          <p className="mb-2 font-semibold text-lg">{skill}</p>
-          <div className="w-full bg-gray-200 rounded h-3 dark:bg-gray-700 overflow-hidden">
-            <div className="bg-gradient-to-r from-purple-500 to-blue-700 h-3 rounded transition-all duration-1000" style={{ width: `${80 + i * 4}%` }}></div>
-          </div>
-        </li>
-      ))}
-    </ul>
-  </section>
+  {/* Skills Section (Marquee) */}
+  <ScrollDepthSection id="skills" className="my-20 overflow-hidden">
+    <div className="mb-10 text-center">
+      <h2 className="font-squid text-4xl font-bold text-purple-600">My Expertise</h2>
+      <p className="font-squid-wide mt-3 text-sm uppercase text-slate-500 dark:text-slate-400">
+        Tools I build with
+      </p>
+    </div>
+    <InfiniteMovingCards items={skills} direction="left" speed="normal" />
+    <InfiniteMovingCards items={skills} direction="right" speed="slow" className="mt-4" />
+  </ScrollDepthSection>
 
-  {/* Projects Section */}
-  <section id="projects" className="my-20 text-center">
-  <h2 className="text-4xl font-bold mb-10 text-green-600">Projects</h2>
-
-  <div className="flex flex-col md:flex-row justify-center items-center gap-10">
-    {/* Project 1 */}
-    <CardContainer className="inter-var">
-      <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
-        <CardItem
-          translateZ="50"
-          className="text-xl font-bold text-neutral-600 dark:text-white"
-        >
-          Project 1
-        </CardItem>
-        <CardItem
-          as="p"
-          translateZ="60"
-          className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
-        >
-          You can visit that site too 
-        </CardItem>
-        <CardItem translateZ="100" className="w-full mt-4">
-          <img
-            src="portfolio.png"
-            height="100"
-            width="100"
-            className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-            alt="thumbnail"
-          />
-        </CardItem>
-        <div className="flex justify-between items-left mt-20">
-          <CardItem
-            translateZ={20}
-            as="a"
-            href="https://marquee-beige.vercel.app/"
-            target="__blank"
-            className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-          >
-            Go to website →
-          </CardItem>
-        </div>
-      </CardBody>
-    </CardContainer>
-
-    {/* Project 2 */}
-    <CardContainer className="inter-var">
-      <CardBody className="bg-gray-50 relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-auto sm:w-[30rem] h-auto rounded-xl p-6 border">
-        <CardItem
-          translateZ="50"
-          className="text-xl font-bold text-neutral-600 dark:text-white"
-        >
-          Project 2
-        </CardItem>
-        <CardItem
-          as="p"
-          translateZ="60"
-          className="text-neutral-500 text-sm max-w-sm mt-2 dark:text-neutral-300"
-        >
-          Its a script for a server not a website 
-        </CardItem>
-        <CardItem translateZ="100" className="w-full mt-4">
-          <img
-            src="cs.webp"
-            height="100"
-            width="200"
-            className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl"
-            alt="thumbnail"
-          />
-        </CardItem>
-        <div className="flex justify-between items-right mt-20">
-          <CardItem
-            translateZ={20}
-            as="a"
-            href="nothing"
-            target="__blank"
-            className="px-4 py-2 rounded-xl text-xs font-normal dark:text-white"
-          >
-            Go to website →
-          </CardItem>
-        </div>
-      </CardBody>
-    </CardContainer>
-  </div>
-</section>
+  {/* Projects Section (Parallax) */}
+  <ScrollDepthSection id="projects" className="my-10">
+    <ParallaxScrollSection projects={projects} />
+  </ScrollDepthSection>
 
 
   {/* Testimonials Section */}
-  <section id="testimonials" className="my-20 text-center">
+  <ScrollDepthSection id="testimonials" className="my-20 text-center">
     <h2 className="text-4xl font-bold mb-10 text-pink-600">Testimonials</h2>
     <div className="carousel flex overflow-x-auto space-x-6 snap-x pb-4 px-2">
       {[
@@ -261,10 +212,11 @@ export default function Home() {
         </div>
       ))}
     </div>
-  </section>
+  </ScrollDepthSection>
 
         {/* Contact Section */}
-        <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
+        <ScrollDepthSection id="contact" className="mx-auto max-w-md">
+        <div className="shadow-input mx-auto w-full rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
       <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
         Welcome to My Portfolio 
       </h2>
@@ -305,6 +257,7 @@ export default function Home() {
       {/* Toast Notification Container */}
       <ToastContainer />
     </div>
+    </ScrollDepthSection>
       </main>
       
       
@@ -350,5 +303,50 @@ const LabelInputContainer = ({
     <div className={cn("flex w-full flex-col space-y-2", className)}>
       {children}
     </div>
+  );
+};
+
+const ScrollDepthSection = ({
+  children,
+  className,
+  id,
+}: {
+  children: React.ReactNode;
+  className?: string;
+  id?: string;
+}) => {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start 92%", "center 52%"],
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.35, 1], [0.08, 0.85, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [180, 0]);
+  const z = useTransform(scrollYProgress, [0, 1], [-320, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
+  const rotateX = useTransform(scrollYProgress, [0, 1], [22, 0]);
+  const rotateY = useTransform(scrollYProgress, [0, 1], [6, 0]);
+  const filter = useTransform(scrollYProgress, [0, 1], ["blur(8px)", "blur(0px)"]);
+
+  return (
+    <motion.section
+      id={id}
+      ref={sectionRef}
+      style={{
+        opacity,
+        y,
+        z,
+        scale,
+        rotateX,
+        rotateY,
+        filter,
+        transformStyle: "preserve-3d",
+        transformOrigin: "center top",
+      }}
+      className={className}
+    >
+      {children}
+    </motion.section>
   );
 };
