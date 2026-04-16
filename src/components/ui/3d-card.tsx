@@ -118,6 +118,7 @@ export const CardItem = ({
   rotateZ?: number | string;
   [key: string]: any;
 }) => {
+  const AnyTag = Tag as any;
   const ref = useRef<HTMLDivElement>(null);
   const [isMouseEntered] = useMouseEnter();
 
@@ -135,13 +136,15 @@ export const CardItem = ({
   };
 
   return (
-    <Tag
-      ref={ref}
+    <AnyTag
+      // The generic `as` prop makes TS inference tricky here; keep the runtime behavior
+      // while avoiding over-constrained JSX typings during production builds.
+      ref={ref as any}
       className={cn("w-fit transition duration-200 ease-linear", className)}
       {...rest}
     >
       {children}
-    </Tag>
+    </AnyTag>
   );
 };
 

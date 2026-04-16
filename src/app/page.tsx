@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { ParallaxScrollSection } from "@/components/ui/parallax-scroll-section";
 import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
+import { Hero3D } from "@/components/ui/hero-3d";
+import { Projects3DBackdrop } from "@/components/ui/projects-3d-backdrop";
 
 
 
@@ -124,6 +126,7 @@ export default function Home() {
       </div>
 
       <AuroraBackground>
+        <Hero3D />
         <motion.div
           initial={{ opacity: 0.0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -180,7 +183,10 @@ export default function Home() {
 
   {/* Projects Section (Parallax) */}
   <ScrollDepthSection id="projects" className="my-20">
-    <ParallaxScrollSection projects={projects} />
+    <div className="relative">
+      <Projects3DBackdrop />
+      <ParallaxScrollSection projects={projects} />
+    </div>
   </ScrollDepthSection>
 
 
