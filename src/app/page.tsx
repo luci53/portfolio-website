@@ -5,7 +5,6 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { AuroraBackground } from "@/components/ui/aurora-background";
 import { TextGenerateEffect } from "@/components/ui/text-generate-effect";
 import { HoveredLink, Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu";
-import { CardBody, CardContainer, CardItem } from "@/components/ui/3d-card";
 import { cn } from "@/lib/utils";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -58,6 +57,12 @@ const projects = [
     src: "/trucking_screenshot.png",
     href: "https://trucking-website-nine.vercel.app/",
   },
+  {
+    title: "WHDispatch",
+    description: "Dispatch services website with premium operational UI",
+    src: "/trucking_screenshot.png",
+    href: "https://whdispatch.com/",
+  },
 ];
 
 const skills = [
@@ -76,7 +81,7 @@ export default function Home() {
   }, [darkMode]);
 
   return (
-    <div className="font-sans bg-white dark:bg-gray-900 text-black dark:text-white scroll-smooth">
+    <div className="font-sans bg-white text-black antialiased [text-rendering:optimizeLegibility] dark:bg-gray-950 dark:text-white scroll-smooth">
       <div className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50")}>
         <Menu setActive={setActive}>
           <MenuItem setActive={setActive} active={active} item="Sections">
@@ -111,7 +116,7 @@ export default function Home() {
                 onClick={() => setDarkMode((prev) => !prev)}
                 className="hovered-link text-left"
               >
-                {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
+                {darkMode ? "Light Mode" : "Dark Mode"}
               </button>
             </div>
           </MenuItem>
@@ -129,7 +134,7 @@ export default function Home() {
           }}
           className="relative flex flex-col gap-4 items-center justify-center px-4"
         >
-          <div className="text-3xl md:text-7xl font-bold dark:text-white text-center">
+          <div className="text-3xl md:text-7xl font-bold tracking-tight dark:text-white text-center">
             Uday Preet Singh
           </div>
           <TextGenerateEffect words={words} />
@@ -147,20 +152,24 @@ export default function Home() {
 
       <main className="container mx-auto px-4 py-10 [perspective:1400px] animate-fade-in">
   {/* About Section */}
-  <ScrollDepthSection id="about" className="my-20 text-center">
-    <h2 className="text-4xl font-bold mb-6 text-blue-600">About Me</h2>
+  <ScrollDepthSection id="about" className="my-24 text-center">
+    <h2 className="font-squid text-4xl font-bold tracking-tight mb-6 text-slate-900 dark:text-white">About</h2>
     <p className="max-w-2xl mx-auto text-lg text-gray-700 dark:text-gray-300">
       I'm a passionate developer with a love for creating beautiful and functional websites. My career goal is to work in a dynamic team and build impactful web applications.
     </p>
-    <a href="/resume.pdf" download className="mt-6 inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
-      📄 Download Resume
+    <a
+      href="/resume.pdf"
+      download
+      className="mt-8 inline-flex items-center justify-center rounded-full border border-slate-200 bg-white px-6 py-2 text-sm font-medium text-slate-900 shadow-sm transition-colors hover:bg-slate-50 dark:border-white/10 dark:bg-white/5 dark:text-white dark:hover:bg-white/10"
+    >
+      Download resume
     </a>
   </ScrollDepthSection>
 
   {/* Skills Section (Marquee) */}
-  <ScrollDepthSection id="skills" className="my-20 overflow-hidden">
+  <ScrollDepthSection id="skills" className="my-24 overflow-hidden">
     <div className="mb-10 text-center">
-      <h2 className="font-squid text-4xl font-bold text-purple-600">My Expertise</h2>
+      <h2 className="font-squid text-4xl font-bold tracking-tight text-slate-900 dark:text-white">Skills</h2>
       <p className="font-squid-wide mt-3 text-sm uppercase text-slate-500 dark:text-slate-400">
         Tools I build with
       </p>
@@ -170,14 +179,14 @@ export default function Home() {
   </ScrollDepthSection>
 
   {/* Projects Section (Parallax) */}
-  <ScrollDepthSection id="projects" className="my-10">
+  <ScrollDepthSection id="projects" className="my-20">
     <ParallaxScrollSection projects={projects} />
   </ScrollDepthSection>
 
 
   {/* Testimonials Section */}
-  <ScrollDepthSection id="testimonials" className="my-20 text-center">
-    <h2 className="text-4xl font-bold mb-10 text-pink-600">Testimonials</h2>
+  <ScrollDepthSection id="testimonials" className="my-24 text-center">
+    <h2 className="font-squid text-4xl font-bold tracking-tight mb-10 text-slate-900 dark:text-white">Testimonials</h2>
     <div className="carousel flex overflow-x-auto space-x-6 snap-x pb-4 px-2">
       {[
         {
@@ -203,7 +212,7 @@ export default function Home() {
       ].map((t, i) => (
         <div
           key={i}
-          className="snap-center min-w-[300px] bg-white dark:bg-gray-800 p-6 rounded-lg shadow hover:shadow-lg transition animate-fade-in"
+          className="snap-center min-w-[300px] rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:shadow-md dark:border-white/10 dark:bg-slate-950 animate-fade-in"
         >
           <Image src={t.image} alt={t.name} width={60} height={60} className="rounded-full mx-auto mb-4" />
           <p className="italic text-gray-700 dark:text-gray-300">"{t.quote}"</p>
@@ -215,13 +224,13 @@ export default function Home() {
   </ScrollDepthSection>
 
         {/* Contact Section */}
-        <ScrollDepthSection id="contact" className="mx-auto max-w-md">
-        <div className="shadow-input mx-auto w-full rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
-      <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
-        Welcome to My Portfolio 
+        <ScrollDepthSection id="contact" className="mx-auto my-24 max-w-md">
+        <div className="shadow-input mx-auto w-full rounded-2xl border border-slate-200 bg-white p-4 md:p-8 dark:border-white/10 dark:bg-slate-950">
+      <h2 className="font-squid text-xl font-bold tracking-tight text-neutral-800 dark:text-neutral-200">
+        Contact
       </h2>
       <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
-        Gimme your details if you need me to contact you back. | PS this does not work contact me through github for now 
+        Leave your details and I’ll get back to you. (Temporarily: reach me via GitHub.)
       </p>
  
       <form className="my-8" onSubmit={handleSubmit}>
@@ -242,12 +251,10 @@ export default function Home() {
        
  
         <button
-          className="group/btn relative block h-10 w-full rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_#27272a_inset,0px_-1px_0px_0px_#27272a_inset]"
+          className="group/btn relative block h-11 w-full rounded-full bg-slate-900 font-medium text-white shadow-sm transition-colors hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
           type="submit"
-        >  <form onSubmit={handleSubmit}>
-          Done &rarr;
-          <BottomGradient />
-          </form>
+        >
+          Send message
         </button>
  
         <div className="my-8 h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
@@ -262,12 +269,12 @@ export default function Home() {
       
       
       {/* Footer */}
-      <footer className="bg-gray-100 dark:bg-gray-800 py-6 text-center">
+      <footer className="border-t border-slate-200 bg-white py-10 text-center dark:border-white/10 dark:bg-gray-950">
         <p>&copy; {new Date().getFullYear()} Lucifer. All rights reserved.</p>
         <div className="flex justify-center gap-4 mt-2">
-          <a href="#" className="hover:text-blue-500">Twitter</a>
-          <a href="#" className="hover:text-blue-500">LinkedIn</a>
-          <a href="#" className="hover:text-blue-500">GitHub</a>
+          <a href="#" className="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">Twitter</a>
+          <a href="#" className="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">LinkedIn</a>
+          <a href="#" className="text-slate-600 hover:text-slate-900 dark:text-slate-300 dark:hover:text-white">GitHub</a>
         </div>
       </footer>
 
